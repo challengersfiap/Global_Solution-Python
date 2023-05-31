@@ -101,6 +101,10 @@ def validacao_escolha(m, nome, email, senha, celular, proposta, cpf_cnpj, c):
         elif esc == 'n':
             return esc
 
+def forma_pagamento(pagamento):
+    if pagamento == '1':
+        numero = input('Número do cartão: ')
+
 #Programa principal
 option = 1
 cor = {'vermelho': '\033[31m', 'verde': '\033[32m', 'amarelo': '\033[33m', 'azul':'\033[36m', 'roxo' : '\033[35', 'limpa' : '\033[0m'}
@@ -132,8 +136,15 @@ match ong_or_empresa:
     case '3':
         nome = input('Nome: ').strip()
         cnpj_cpf = input('CPF: ').strip()
+        valor = float(input('Qual valor deseja doar? R$'))
+        pagamento = input('1- Débito\n2- Crédito\n3- Débito\n')
+        while pagamento != '1' and pagamento != '2' and pagamento != '3':
+            separador(35, 5)
+            pagamento = input(f'{cor["vermelho"]}Opção inválida!{cor["limpa"]}\n1- Débito\n2- Crédito\n3- Débito\n')
+            separador(35, 5)
         proposta = ''
-        cadastro.append([nome, proposta, cnpj_cpf])
+        forma_pagamento(pagamento)
+        cadastro.append([nome, proposta, cnpj_cpf, valor, pagamento])
     case _:
         print('Opção inválida')
     
