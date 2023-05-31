@@ -192,10 +192,4 @@ while escolha != 'n':
         cadastro [1][1] = cnpj_cpf
         c = 1
 
-
-
-
-    
-
-
 print(cadastro)
