@@ -70,12 +70,12 @@ def cpf_or_cnpj(m, nome, email, senha, celular, proposta, cpf_cnpj):
     return m
 
 def troca(m):
-    mudanca = validacao_s_n(input("Deseja trocar alguma informação? [S/N] ").strip().lower(), "Deseja trocar alguma informação? [S/N] ").lower().strip()
-    return mudanca
+    m = validacao_s_n(input("Deseja trocar alguma informação? [S/N] ").strip().lower(), "Deseja trocar alguma informação? [S/N] ").lower().strip()
+    return m
 
 def validacao_escolha(m, nome, email, senha, celular, proposta, cpf_cnpj, c):
-    cpf_or_cnpj(m, nome, email, senha, celular, proposta, cpf_cnpj)
     if c == 0:
+        cpf_or_cnpj(m, nome, email, senha, celular, proposta, cpf_cnpj)
         esc = input('Qual item a cima deseja trocar? ').strip().lower()
         while esc != '1' and esc !='2' and esc != '3' and esc != '4' and esc != '5' and esc != '6':
             separador(35, 5)
@@ -86,12 +86,12 @@ def validacao_escolha(m, nome, email, senha, celular, proposta, cpf_cnpj, c):
         return esc
     
     elif c == 1:
+        cpf_or_cnpj(m, nome, email, senha, celular, proposta, cpf_cnpj)
         esc = input('Deseja trocar mais algum item? [S/N] ').strip().lower()
         if esc != 's' and esc != 'n':
             esc = validacao_s_n(esc, 'Qual item a cima deseja trocar? ')
 
         if esc == 's':
-            cpf_or_cnpj(m, nome, email, senha, celular, proposta, cpf_cnpj)
             esc = input('Qual item a cima deseja trocar? ').strip().lower()
             while esc != '1' and esc !='2' and esc != '3' and esc != '4' and esc != '5' and esc != '6':
                 print(f'{cor["vermelho"]}Opção inválida!{cor["limpa"]}')
@@ -139,9 +139,10 @@ match ong_or_empresa:
     
 cor_separador(ong_or_empresa)
 
-mudanca = troca(ong_or_empresa)
+escolha = troca(ong_or_empresa)
 
-c = escolha = 0
+c = 0
+
 while escolha != 'n':
     escolha = validacao_escolha(ong_or_empresa, nome, email, senha, cell, proposta, cnpj_cpf, c)
 
