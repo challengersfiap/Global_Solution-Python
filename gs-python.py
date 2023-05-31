@@ -36,10 +36,10 @@ def cor_separador(cor):
         separador(35, 4)
 
 #Função de validação para respostas de "s" ou "n"
-def validacao_s_n(val, mensagem, m):
+def validacao_s_n(val, mensagem):
     while val != "s" and val != "n":
         separador(35, 5)
-        print(f'\n{cor["vermelho"]}Opção inválida!{cor["limpa"]}')
+        print(f'{cor["vermelho"]}Opção inválida!{cor["limpa"]}')
         val = input(mensagem).lower().strip()
         separador(35, 5)
     return val
@@ -70,19 +70,36 @@ def cpf_or_cnpj(m, nome, email, senha, celular, proposta, cpf_cnpj):
     return m
 
 def troca(m):
-    mudanca = validacao_s_n(input("Deseja trocar alguma informação? [S/N]"), "Deseja trocar alguma informação? [S/N]", m).lower().strip()
+    mudanca = validacao_s_n(input("Deseja trocar alguma informação? [S/N] ").strip().lower(), "Deseja trocar alguma informação? [S/N] ").lower().strip()
     return mudanca
 
-def validacao_escolha(m, nome, email, senha, celular, proposta, cpf_cnpj):
+def validacao_escolha(m, nome, email, senha, celular, proposta, cpf_cnpj, c):
     cpf_or_cnpj(m, nome, email, senha, celular, proposta, cpf_cnpj)
-    esc = input('Qual item a cima deseja trocar?').strip().lower()
-    while esc != '1' and esc !='2' and esc != '3' and esc != '4' and esc != '5' and esc != '6':
-        separador(35, 5)
-        print(f'{cor["vermelho"]}Opção inválida!{cor["limpa"]}')
-        cpf_or_cnpj(m, nome, email, senha, celular, proposta, cpf_cnpj)
+    if c == 0:
         esc = input('Qual item a cima deseja trocar? ').strip().lower()
-        separador(35, 5)
-    return esc
+        while esc != '1' and esc !='2' and esc != '3' and esc != '4' and esc != '5' and esc != '6':
+            separador(35, 5)
+            print(f'{cor["vermelho"]}Opção inválida!{cor["limpa"]}')
+            cpf_or_cnpj(m, nome, email, senha, celular, proposta, cpf_cnpj)
+            esc = input('Qual item a cima deseja trocar? ').strip().lower()
+            separador(35, 5)
+        return esc
+    
+    elif c == 1:
+        esc = input('Deseja trocar mais algum item? [S/N] ').strip().lower()
+        if esc != 's' and esc != 'n':
+            esc = validacao_s_n(esc, 'Qual item a cima deseja trocar? ')
+
+        if esc == 's':
+            cpf_or_cnpj(m, nome, email, senha, celular, proposta, cpf_cnpj)
+            esc = input('Qual item a cima deseja trocar? ').strip().lower()
+            while esc != '1' and esc !='2' and esc != '3' and esc != '4' and esc != '5' and esc != '6':
+                print(f'{cor["vermelho"]}Opção inválida!{cor["limpa"]}')
+                esc = input('Qual item a cima deseja trocar? ').strip().lower()
+            return esc
+        
+        elif esc == 'n':
+            return esc
 
 #Programa principal
 option = 1
@@ -94,75 +111,88 @@ cadastro = []
 #Menu pra selecionar o tipo de cadastro desejado
 ong_or_empresa = validacao_oe()
 
-mudanca = 0
+cor_separador(ong_or_empresa)
 
-while mudanca != 'n':
+email = input('Email: ').strip()
+senha = input('Senha: ')
+cell = input('Celular: ').strip()
+cadastro.append([email, senha, cell])
 
-    cor_separador(ong_or_empresa)
-
-    email = input('Email: ').strip()
-    senha = input('Senha: ')
-    cell = input('Celular: ').strip()
-    cadastro.append([email, senha, cell])
-
-    match ong_or_empresa:
-        case '1':
-            nome = input('Nome da ONG: ').strip()
-            cnpj_cpf = input('CNPJ: ').strip()
-            proposta = input('Escreva um pouco sobre a sua proposta para seus futuros patrocinadores↓\n').strip()
-            cadastro.append([nome, proposta, cnpj_cpf])
-        case '2':
-            nome = input('Nome da empresa: ').strip()
-            cnpj_cpf = input('CNPJ: ').strip()
-            proposta = input('Descreva sua empresa e seus objetivos em poucas palavras↓\n').strip()
-            cadastro.append([nome, proposta, cnpj_cpf])
-        case '3':
-            nome = input('Nome: ').strip()
-            cnpj_cpf = input('CPF: ').strip()
-            proposta = ''
-            cadastro.append([nome, proposta, cnpj_cpf])
-        case _:
-            print('Opção inválida')
+match ong_or_empresa:
+    case '1':
+        nome = input('Nome da ONG: ').strip()
+        cnpj_cpf = input('CNPJ: ').strip()
+        proposta = input('Escreva um pouco sobre a sua proposta para seus futuros patrocinadores↓\n').strip()
+        cadastro.append([nome, proposta, cnpj_cpf])
+    case '2':
+        nome = input('Nome da empresa: ').strip()
+        cnpj_cpf = input('CNPJ: ').strip()
+        proposta = input('Descreva sua empresa e seus objetivos em poucas palavras↓\n').strip()
+        cadastro.append([nome, proposta, cnpj_cpf])
+    case '3':
+        nome = input('Nome: ').strip()
+        cnpj_cpf = input('CPF: ').strip()
+        proposta = ''
+        cadastro.append([nome, proposta, cnpj_cpf])
+    case _:
+        print('Opção inválida')
     
-    cor_separador(ong_or_empresa)
+cor_separador(ong_or_empresa)
 
-    mudanca = troca(ong_or_empresa)
+mudanca = troca(ong_or_empresa)
 
-    if mudanca == 's':
-        escolha = validacao_escolha(ong_or_empresa, nome, email, senha, cell, proposta, cnpj_cpf)
+c = escolha = 0
+while escolha != 'n':
+    escolha = validacao_escolha(ong_or_empresa, nome, email, senha, cell, proposta, cnpj_cpf, c)
 
-    # cadastro = [['gabrielrodri333@gmail.com', 'Gabriel910', '(11)993680593'], ['FomeZero', 'aa', '6516540001-98']]
-    '''1- ONG: FomeZero
-        2- Email:
-        3- Senha:
-        4- Celular:
-        5- CNPJ:
-        6- Proposta:'''
     if escolha == '1':
         match ong_or_empresa:
             case '1':
                 nome = input('Nome da ONG: ').strip()
                 cadastro[1][0] = nome
+                c = 1
             case '2':
                 nome = input('Nome da empresa: ').strip()
                 cadastro[1][0] = nome
+                c = 1
             case '3':
                 nome = input('Nome: ').strip()
                 cadastro[1][0] = nome
+                c = 1
             case _:
                 print('Opção inválida!')
 
     elif escolha == '2':
         email = input("Email: ").strip()
         cadastro[0][0] = email
+        c = 1
 
     elif escolha == '3':
         senha = input('Senha: ')
         cadastro[0][1] = senha
+        c = 1
 
     elif escolha == '4':
         cell = input('Celular: ').strip()
         cadastro[0][2] = cell
+        c = 1
+
+    elif escolha == '5' and (ong_or_empresa == '1' or ong_or_empresa == '2'):
+        cnpj_cpf = input('CNPJ: ').strip()
+        cadastro[1][2] = cnpj_cpf
+        c = 1
+
+    elif escolha == '5' and ong_or_empresa == '3':
+        cnpj_cpf = input("CPF: ").strip()
+        cadastro[1][2] = cnpj_cpf
+        c = 1
+    
+    elif escolha == '6':
+        proposta = input('Proposta: ').strip()
+        cadastro [1][1] = cnpj_cpf
+        c = 1
+
+
 
 
     
