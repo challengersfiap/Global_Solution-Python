@@ -52,21 +52,25 @@ def validacao_oe():
         separador(50, 1)
         val = input('Opção inválida\n1- ONG\n2- Empresa\n3- Doação\n').strip()
         separador(50, 1)
-    separador(50, 1)
     return val
 
 def cpf_or_cnpj(m, nome, email, senha, celular, proposta, cpf_cnpj):
     if m == '1':
+        cor_separador(m)
         print(f'1- ONG: {nome}')
     elif m == '2':
+        cor_separador(m)
         print(f'1- Nome da empresa: {nome}')
     else:
+        cor_separador(m)
         print(f'1- Nome:{nome}')
     
     if m == '1' or m == '2':
         print(f"2- Email: {email}\n3- Senha: {senha}\n4- Celular: {celular}\n5- CNPJ: {cpf_cnpj}\n6- Proposta: {proposta}")
+        cor_separador(m)
     else:
         print(f"2- Email: {email}\n3- Senha: {senha}\n4- Celular: {celular}\n5- CPF: {cpf_cnpj}")
+        cor_separador(m)
     return m
 
 def troca(m):
@@ -89,21 +93,32 @@ def validacao_escolha(m, nome, email, senha, celular, proposta, cpf_cnpj, c):
         cpf_or_cnpj(m, nome, email, senha, celular, proposta, cpf_cnpj)
         esc = input('Deseja trocar mais algum item? [S/N] ').strip().lower()
         if esc != 's' and esc != 'n':
-            esc = validacao_s_n(esc, 'Qual item a cima deseja trocar? ')
+            esc = validacao_s_n(esc, 'Deseja trocar mais algum item? [S/N] ')
 
         if esc == 's':
+            cor_separador(m)
+            cpf_or_cnpj(m, nome, email, senha, celular, proposta, cpf_cnpj)
             esc = input('Qual item a cima deseja trocar? ').strip().lower()
             while esc != '1' and esc !='2' and esc != '3' and esc != '4' and esc != '5' and esc != '6':
+                separador(35, 5)
                 print(f'{cor["vermelho"]}Opção inválida!{cor["limpa"]}')
                 esc = input('Qual item a cima deseja trocar? ').strip().lower()
+                separador(35, 5)
             return esc
         
         elif esc == 'n':
             return esc
 
-def forma_pagamento(pagamento):
-    if pagamento == '1':
+def forma_pagamento(pagamento, rs):
+    if pagamento == '1' or pagamento == '2':
+        nome = input('Nome do titular: ')
         numero = input('Número do cartão: ')
+        val = input('Validade: ')
+        cvv = input('CVV: ')
+        print(f'Pagamento de R${rs:.2f} confirmado! Muito obrigado pela sua doação!')
+    elif pagamento == '3':
+        
+
 
 #Programa principal
 option = 1
@@ -136,15 +151,8 @@ match ong_or_empresa:
     case '3':
         nome = input('Nome: ').strip()
         cnpj_cpf = input('CPF: ').strip()
-        valor = float(input('Qual valor deseja doar? R$'))
-        pagamento = input('1- Débito\n2- Crédito\n3- Débito\n')
-        while pagamento != '1' and pagamento != '2' and pagamento != '3':
-            separador(35, 5)
-            pagamento = input(f'{cor["vermelho"]}Opção inválida!{cor["limpa"]}\n1- Débito\n2- Crédito\n3- Débito\n')
-            separador(35, 5)
         proposta = ''
-        forma_pagamento(pagamento)
-        cadastro.append([nome, proposta, cnpj_cpf, valor, pagamento])
+        cadastro.append([nome, proposta, cnpj_cpf,])
     case _:
         print('Opção inválida')
     
@@ -203,5 +211,15 @@ while escolha != 'n':
         proposta = input('Proposta: ').strip()
         cadastro [1][1] = cnpj_cpf
         c = 1
+
+if ong_or_empresa == '3':
+    separador(35, ong_or_empresa)
+    valor = float(input('Qual valor deseja doar? R$'))
+    pagamento = input('Forma de pagamento:\n1- Débito\n2- Crédito\n3- Pix\n')
+    while pagamento != '1' and pagamento != '2' and pagamento != '3':
+        separador(35, 5)
+        pagamento = input(f'{cor["vermelho"]}Opção inválida!{cor["limpa"]}\n1- Débito\n2- Crédito\n3- Pix\n')
+        separador(35, 5)
+    forma_pagamento(pagamento, valor)
 
 print(cadastro)
