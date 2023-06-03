@@ -1,6 +1,10 @@
 '''preciso criar um programa que realize cadastro de empresas e ONG's, onde empresas e ONGs se cadastram As ONGs anunciam campanhas e ações q elas vão fazer, as empresas encontram qual campanha elas querem patrocina.
 É um intermediador entre os dois, pra q as empresas não precisem sair pesquisando por aí, e as ONGs aparecem pra mais empresas'''
 
+import random
+import string
+import time
+
 #Função para printar um separador decorativo
 def separador(n, cor):
     cores = {
@@ -117,11 +121,15 @@ def forma_pagamento(pagamento, rs):
         cvv = input('CVV: ')
         print(f'Pagamento de R${rs:.2f} confirmado! Muito obrigado pela sua doação!')
     elif pagamento == '3':
-        
-
+        for c in range (32):
+            caractere_aleatorio = random.choice(string.ascii_letters + string.digits)
+            print(caractere_aleatorio, end='', flush= True)
+            time.sleep(0.05)
+        print('\nConfirmando o pagamento...')
+        time.sleep(4)
+        print(f'Pagamento de R${rs:.2f} confirmado! Muito obrigado pela sua doação!')
 
 #Programa principal
-option = 1
 cor = {'vermelho': '\033[31m', 'verde': '\033[32m', 'amarelo': '\033[33m', 'azul':'\033[36m', 'roxo' : '\033[35', 'limpa' : '\033[0m'}
 ong = ['FomeZero', 'Saciar Vidas', 'Prato Cheio', 'Pão e Compaixão', 'Alimentando Sonhos']
 empresa = ['Innovia', 'Elixir Industries', 'Apex Innovations', 'Zephyr Enterprises', 'PulseTech']
