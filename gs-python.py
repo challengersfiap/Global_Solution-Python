@@ -58,6 +58,7 @@ def validacao_oe():
         separador(50, 1)
     return val
 
+#Função para imprimir os dados de acordo com a opção de cadastro selecionada
 def cpf_or_cnpj(m, nome, email, senha, celular, proposta, cpf_cnpj):
     if m == '1':
         cor_separador(m)
@@ -113,6 +114,7 @@ def validacao_escolha(m, nome, email, senha, celular, proposta, cpf_cnpj, c):
         elif esc == 'n':
             return esc
 
+#funcao para caso seja a opção 3, ir para parte de pagamento
 def forma_pagamento(pagamento, rs):
     if pagamento == '1' or pagamento == '2':
         nome = input('Nome do titular: ')
@@ -129,11 +131,197 @@ def forma_pagamento(pagamento, rs):
         time.sleep(4)
         print(f'Pagamento de R${rs:.2f} confirmado! Muito obrigado pela sua doação!')
 
-#Programa principal
+def propostas(n):
+    if n == 1:
+        separador(35, ong_or_empresa)
+        empresa_aleatoria = random.choice(empresas)
+        print('Analisamos todas as empresas cadastradas em nossa plataforma e essa foi a melhor opção para sua ONG!')
+        print(f"================= {empresa_aleatoria['titulo']} =================")
+        print("Empresa:", empresa_aleatoria['empresa'])
+        print("ONG:", empresa_aleatoria['ong'])
+        print("Título:", empresa_aleatoria['titulo'])
+        print("Descrição:", empresa_aleatoria['descricao'])
+        print("Objetivos:")
+        for objetivo in empresa_aleatoria['objetivos']:
+            print("- ", objetivo)
+        print("Benefícios:")
+        for beneficio in empresa_aleatoria['beneficios']:
+            print("- ", beneficio)
+        separador(35, ong_or_empresa)
+
+    elif n == 2:
+        separador(35, ong_or_empresa)
+        proposta_aleatoria = random.choice(ong)
+        print('Analizamos todas as ONGs cadastradas em nossa plataforma e essa foi a melhor opção para sua empresa!')
+        print(f"================= {proposta_aleatoria['titulo']} =================")
+        print("ONG:", proposta_aleatoria['ong'])
+        print("Título:", proposta_aleatoria['titulo'])
+        print("Descrição:", proposta_aleatoria['descricao'])
+        print("Objetivos:")
+        for objetivo in proposta_aleatoria['objetivos']:
+            print("- ", objetivo)
+        print("Benefícios:")
+        for beneficio in proposta_aleatoria['beneficios']:
+            print("- ", beneficio)
+        separador(35, ong_or_empresa)
+    elif n == 3:
+        separador(35, ong_or_empresa)
+        valor = float(input('Qual valor deseja doar? R$'))
+        pagamento = input('Forma de pagamento:\n1- Débito\n2- Crédito\n3- Pix\n')
+        while pagamento != '1' and pagamento != '2' and pagamento != '3':
+            separador(35, 5)
+            pagamento = input(f'{cor["vermelho"]}Opção inválida!{cor["limpa"]}\n1- Débito\n2- Crédito\n3- Pix\n')
+            separador(35, 5)
+        forma_pagamento(pagamento, valor)
+
+#Listas utilizadas no programa
 cor = {'vermelho': '\033[31m', 'verde': '\033[32m', 'amarelo': '\033[33m', 'azul':'\033[36m', 'roxo' : '\033[35', 'limpa' : '\033[0m'}
-ong = ['FomeZero', 'Saciar Vidas', 'Prato Cheio', 'Pão e Compaixão', 'Alimentando Sonhos']
 empresa = ['Innovia', 'Elixir Industries', 'Apex Innovations', 'Zephyr Enterprises', 'PulseTech']
 cadastro = []
+empresas = [
+    {
+        'empresa': 'Innovia',
+        'ong': 'FomeZero',
+        'titulo': 'Programa de combate à fome',
+        'descricao': 'A Innovia, uma empresa inovadora e comprometida com o impacto social, apresenta uma proposta de parceria para apoiar o programa de combate à fome desenvolvido pela ONG FomeZero.',
+        'objetivos': [
+            'Distribuir cestas básicas para 500 famílias',
+            'Criar hortas comunitárias',
+            'Promover educação nutricional'
+        ],
+        'beneficios': [
+            'Reconhecimento como parceira de um programa de impacto social',
+            'Possibilidade de colaboração em ações de combate à fome',
+            'Melhoria da imagem corporativa'
+        ]
+    },
+    {
+        'empresa': 'Elixir Industries',
+        'ong': 'FomeZero',
+        'titulo': 'Projeto de Sustentabilidade Alimentar',
+        'descricao': 'A Elixir Industries, uma empresa comprometida com a sustentabilidade e a responsabilidade social, tem o prazer de apresentar uma proposta de parceria para apoiar o programa de combate à fome desenvolvido pela ONG FomeZero.',
+        'objetivos': [
+            'Implementar sistemas de reciclagem de alimentos para reduzir o desperdício e aproveitar recursos',
+            'Criar programas de capacitação e geração de renda para comunidades carentes envolvendo a produção e comercialização de alimentos',
+            'Promover ações de conscientização sobre a importância da alimentação sustentável'
+        ],
+        'beneficios': [
+            'Reconhecimento como parceira de um projeto inovador e sustentável',
+            'Fortalecimento da imagem corporativa como empresa comprometida com a responsabilidade social',
+            'Oportunidade de envolvimento de colaboradores em ações voluntárias com impacto significativo'
+        ]
+    },
+    {
+        'empresa': 'Zephyr Enterprises',
+        'ong': 'FomeZero',
+        'titulo': 'Projeto de Erradicação da Fome',
+        'descricao': 'A Zephyr Enterprises, uma empresa comprometida com a responsabilidade social e o combate à fome, tem o prazer de apresentar uma proposta de parceria para apoiar o projeto de erradicação da fome desenvolvido pela ONG FomeZero.',
+        'objetivos': [
+            'Implementar programas de distribuição de alimentos em larga escala',
+            'Desenvolver iniciativas de capacitação e geração de renda para comunidades carentes',
+            'Promover a conscientização sobre a importância da segurança alimentar'
+        ],
+        'beneficios': [
+            'Reconhecimento como parceira em um projeto de grande impacto social',
+            'Fortalecimento da imagem corporativa como empresa comprometida com a responsabilidade social',
+            'Possibilidade de desenvolver soluções inovadoras e sustentáveis para o combate à fome'
+        ]   
+    },
+    {
+        'empresa': 'Pulse Tech',
+        'ong': 'FomeZero',
+        'titulo': 'Projeto de Tecnologia para o Combate à Fome',
+        'descricao': 'A Pulse Tech, uma empresa inovadora no ramo da tecnologia, está interessada em estabelecer uma parceria com a ONG FomeZero para desenvolver um projeto de tecnologia voltado para o combate à fome. Com o uso de soluções tecnológicas avançadas, pretendemos otimizar a distribuição de alimentos e facilitar o acesso das comunidades carentes a recursos alimentares essenciais.',
+        'objetivos': [
+            'Desenvolver um aplicativo de doações e distribuição de alimentos',
+            'Implementar sistemas de logística inteligente para agilizar o transporte de alimentos',
+            'Utilizar a análise de dados para identificar áreas de maior necessidade e direcionar os esforços de combate à fome'
+        ],
+        'beneficios': [
+            'Reconhecimento como parceira em um projeto inovador e de impacto social',
+            'Oportunidade de contribuir com soluções tecnológicas para um problema global',
+            'Fortalecimento da imagem corporativa como empresa engajada com a responsabilidade social e a inovação'
+        ]
+    }
+]
+
+ong = {
+    'ong': 'FomeZero',
+    'titulo': 'Programa de combate à fome',
+    'descricao': 'A ONG FomeZero está desenvolvendo um programa para combater a fome e a insegurança alimentar em comunidades carentes. A empresa patrocinadora terá a oportunidade de fazer a diferença na vida das pessoas, garantindo que tenham acesso a alimentos adequados e nutritivos.',
+    'objetivos': [
+        'Distribuir cestas básicas para 500 famílias',
+        'Criar hortas comunitárias',
+        'Promover educação nutricional'
+    ],
+    'beneficios': [
+        'Reconhecimento como parceira de um programa de impacto social',
+        'Possibilidade de colaboração em ações de combate à fome',
+        'Melhoria da imagem corporativa'
+    ]
+},
+{
+    'ong': 'SaciarVidas',
+    'titulo': 'Projeto de alimentação saudável',
+    'descricao': 'A ONG SaciarVidas está empenhada em promover uma alimentação saudável e consciente para crianças e jovens de comunidades carentes. A empresa patrocinadora terá a oportunidade de apoiar um projeto que visa combater a desnutrição e proporcionar uma vida mais saudável para essas crianças.',
+    'objetivos': [
+        'Implementar programas de educação alimentar em escolas',
+        'Oferecer refeições balanceadas e nutritivas para 200 crianças diariamente',
+        'Realizar oficinas de culinária saudável'
+    ],
+    'beneficios': [
+        'Participação ativa em um projeto social de impacto',
+        'Visibilidade como empresa comprometida com a promoção da saúde',
+        'Fortalecimento da responsabilidade social corporativa'
+    ]
+},
+{
+    'ong': 'PratoCheio',
+    'titulo': 'Campanha de combate à fome',
+    'descricao': 'A ONG PratoCheio tem como missão principal combater a fome e a desnutrição em comunidades carentes. Com a parceria da sua empresa, poderemos expandir nossos programas de distribuição de alimentos e ampliar nosso alcance, levando refeições nutritivas para um número maior de pessoas em situação de vulnerabilidade.',
+    'objetivos': [
+        'Aumentar a quantidade de refeições distribuídas mensalmente',
+        'Criar redes de coleta de alimentos não utilizados',
+        'Promover a conscientização sobre a importância da alimentação adequada'
+    ],
+    'beneficios': [
+        'Contribuição direta no combate à fome e desnutrição',
+        'Visibilidade como empresa engajada socialmente',
+        'Oportunidade de envolver colaboradores em ações voluntárias'
+    ]
+},
+{
+    'ong': 'Pão e Compaixão',
+    'titulo': 'Programa de Alimentação Solidária',
+    'descricao': 'A ONG Pão e Compaixão trabalha incansavelmente para levar alimentos nutritivos e dignidade às pessoas em situação de vulnerabilidade social. Com o apoio da sua empresa, poderemos fortalecer nosso programa de Alimentação Solidária, ampliando o número de refeições oferecidas diariamente e expandindo nossas atividades para outras regiões carentes.',
+    'objetivos': [
+        'Ampliar o número de refeições oferecidas diariamente',
+        'Implementar hortas comunitárias para promoção da segurança alimentar',
+        'Capacitar e empoderar indivíduos em situação de vulnerabilidade'
+    ],
+    'beneficios': [
+        'Contribuição direta para a redução da fome e da desigualdade social',
+        'Fortalecimento da responsabilidade social da empresa',
+        'Possibilidade de engajamento dos colaboradores em ações voluntárias'
+    ]
+},
+{
+    'ong': 'Alimentando Sonhos',
+    'titulo': 'Projeto Educação Alimentar',
+    'descricao': 'A ONG Alimentando Sonhos tem como missão promover a educação alimentar e o acesso a alimentos saudáveis para crianças em comunidades carentes. Com o apoio da sua empresa, poderemos expandir nossas atividades e alcançar um número maior de crianças, proporcionando-lhes uma base sólida de conhecimento sobre alimentação saudável e nutrição.',
+    'objetivos': [
+        'Realizar oficinas de educação alimentar em escolas e centros comunitários',
+        'Distribuir kits de alimentos saudáveis para as famílias',
+        'Promover a criação de hortas escolares'
+    ],
+    'beneficios': [
+        'Contribuição para a melhoria da qualidade de vida das crianças e suas famílias',
+        'Fortalecimento da imagem da empresa como agente de transformação social',
+        'Possibilidade de envolvimento dos colaboradores em atividades voluntárias'
+    ]
+}
+
+#Programa principal
 
 #Menu pra selecionar o tipo de cadastro desejado
 ong_or_empresa = validacao_oe()
@@ -220,14 +408,9 @@ while escolha != 'n':
         cadastro [1][1] = cnpj_cpf
         c = 1
 
-if ong_or_empresa == '3':
-    separador(35, ong_or_empresa)
-    valor = float(input('Qual valor deseja doar? R$'))
-    pagamento = input('Forma de pagamento:\n1- Débito\n2- Crédito\n3- Pix\n')
-    while pagamento != '1' and pagamento != '2' and pagamento != '3':
-        separador(35, 5)
-        pagamento = input(f'{cor["vermelho"]}Opção inválida!{cor["limpa"]}\n1- Débito\n2- Crédito\n3- Pix\n')
-        separador(35, 5)
-    forma_pagamento(pagamento, valor)
-
-print(cadastro)
+if ong_or_empresa == '1':
+    propostas(1)
+elif ong_or_empresa == '2':
+    propostas(2)
+elif ong_or_empresa == '3':
+    propostas(3)
