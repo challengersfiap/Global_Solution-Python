@@ -1,6 +1,3 @@
-'''preciso criar um programa que realize cadastro de empresas e ONG's, onde empresas e ONGs se cadastram As ONGs anunciam campanhas e ações q elas vão fazer, as empresas encontram qual campanha elas querem patrocina.
-É um intermediador entre os dois, pra q as empresas não precisem sair pesquisando por aí, e as ONGs aparecem pra mais empresas'''
-
 import random
 import string
 import time
@@ -78,10 +75,12 @@ def cpf_or_cnpj(m, nome, email, senha, celular, proposta, cpf_cnpj):
         cor_separador(m)
     return m
 
+#Função para troca de informações de cadastro
 def troca(m):
     m = validacao_s_n(input("Deseja trocar alguma informação? [S/N] ").strip().lower(), "Deseja trocar alguma informação? [S/N] ").lower().strip()
     return m
 
+#Função para validar a escolha do usuario para trocar algum item
 def validacao_escolha(m, nome, email, senha, celular, proposta, cpf_cnpj, c):
     if c == 0:
         cpf_or_cnpj(m, nome, email, senha, celular, proposta, cpf_cnpj)
@@ -131,6 +130,7 @@ def forma_pagamento(pagamento, rs):
         time.sleep(4)
         print(f'Pagamento de R${rs:.2f} confirmado! Muito obrigado pela sua doação!')
 
+#Função para definir o fim do programa, para qual rumo ele toma
 def propostas(n):
     if n == 1:
         separador(35, ong_or_empresa)
@@ -358,6 +358,7 @@ escolha = troca(ong_or_empresa)
 
 c = 0
 
+#Laço para trocar as informações que ele selecionar e quantas vezes o usuário quiser, caso o usuário queira
 while escolha != 'n':
     escolha = validacao_escolha(ong_or_empresa, nome, email, senha, cell, proposta, cnpj_cpf, c)
 
