@@ -11,7 +11,7 @@ def separador(n, cor):
         4: {'amarelo': '\033[33m', 'limpa': '\033[0m'},
         5: {'vermelho': '\033[31m', 'limpa': '\033[0m'}
     }
-    #separador do meno
+    #separador do menu
     if cor == 1:
         mensagem = print(f'{cores[1]["azul"]}-={cores[1]["limpa"]}' * n)
     #separador do if de ONG
@@ -176,7 +176,6 @@ def propostas(n):
 
 #Listas utilizadas no programa
 cor = {'vermelho': '\033[31m', 'verde': '\033[32m', 'amarelo': '\033[33m', 'azul':'\033[36m', 'roxo' : '\033[35', 'limpa' : '\033[0m'}
-empresa = ['Innovia', 'Elixir Industries', 'Apex Innovations', 'Zephyr Enterprises', 'PulseTech']
 cadastro = []
 empresas = [
     {
